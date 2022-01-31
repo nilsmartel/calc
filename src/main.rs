@@ -1,30 +1,57 @@
 use dioxus::prelude::*;
 fn main() {
-    dioxus::desktop::launch(App);
+    use dioxus::desktop::tao::dpi::LogicalSize;
+    let title = "Calculator";
+
+    dioxus::desktop::launch_cfg(calculator, |cfg| {
+        cfg.with_window(|w| {
+            w.with_title(title)
+                .with_resizable(false)
+                .with_inner_size(LogicalSize::new(232.0, 332.0))
+        })
+    });
 }
 
 const TEXT_COLOR: &'static str = "#e9e9e9";
 const BACKGROUND_COLOR: &'static str = "#232323";
 
-fn App(cx: Scope) -> Element {
+fn calculator(cx: Scope) -> Element {
+    let input_text = "3,14159";
+    let stack_text = "1234,5";
+
     cx.render(rsx! {
+        style {
+            ["
+            body {
+              margin: 0;
+              font: 100 14px 'Roboto';
+              overflow: hidden;
+            }
+                "]
+        }
         div {
             display: "flex",
             background_color: "#232323",
             flex_direction: "column",
-            font_family: "Arial",
+            font: "100 12pt Helvetica",
 
             // headerline
             div {
                 display: "flex",
                 flex_direction: "column",
-                justify_content: "end",
-                align_items: "center",
                 width: "100%",
+                height: "69px",
                 padding: "12px",
                 color: "#e9e9e9",
-                p {"123"}
-                "Hello, world!"
+                p {
+                    margin: "0",
+                    "{stack_text}"
+                }
+                p {
+                    font_size: "24pt",
+                    margin: "0",
+                    "{input_text}"
+                }
             }
 
             // controls
@@ -119,16 +146,8 @@ struct ButtonProps {
 }
 
 fn Button(cx: Scope<ButtonProps>) -> Element {
-    let margin_top = if cx.props.margin_top {
-        "1px"
-    } else {
-        "0"
-    };
-    let margin_left = if cx.props.margin_left {
-        "1px"
-    } else {
-        "0"
-    };
+    let margin_top = if cx.props.margin_top { "1px" } else { "0" };
+    let margin_left = if cx.props.margin_left { "1px" } else { "0" };
 
     cx.render(rsx! {
         div {
