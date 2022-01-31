@@ -7,7 +7,7 @@ fn main() {
         cfg.with_window(|w| {
             w.with_title(title)
                 .with_resizable(false)
-                .with_inner_size(LogicalSize::new(232.0, 332.0))
+                .with_inner_size(LogicalSize::new(231.0, 321.0))
         })
     });
 }
@@ -18,6 +18,7 @@ const BACKGROUND_COLOR: &'static str = "#232323";
 fn calculator(cx: Scope) -> Element {
     let input_text = "3,14159";
     let stack_text = "1234,5";
+    let operator = "+";
 
     cx.render(rsx! {
         style {
@@ -39,18 +40,32 @@ fn calculator(cx: Scope) -> Element {
             div {
                 display: "flex",
                 flex_direction: "column",
+                align_items: "flex-end",
                 width: "100%",
-                height: "69px",
-                padding: "12px",
+                margin_bottom: "8px",
                 color: "#e9e9e9",
                 p {
-                    margin: "0",
+                    margin: "12px",
                     "{stack_text}"
                 }
-                p {
+                // operand and current input
+                div {
+                    display: "flex",
+                    flex_direction: "row",
+                    height: "32px",
+                    width: "100%",
+                    justify_content: "space-between",
+                    align_items: "center",
                     font_size: "24pt",
-                    margin: "0",
-                    "{input_text}"
+
+                    p {
+                        margin: "12px",
+                        "{operator}"
+                    }
+                    p {
+                        margin: "12px",
+                        "{input_text}"
+                    }
                 }
             }
 
